@@ -1,0 +1,40 @@
+{% extends 'basetruck.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+    <h2>Bonjour {{ app.user.username }}</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Ref. Produit</th>
+            <th scope="col">Nom du Produit</th>
+            <th scope="col">Type</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Description</th>
+            <th></th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for data in list %}
+          <tr>
+            <td>{{ data.getId }}</td>
+            <td>{{ data.getProductName }}</td>
+            <td>{{ data.getType }}</td>
+            <td>{{ data.getPrice }}</td>
+            <td>{{ data.getDescription }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('updateproduct',{'id': data.id }) }}">Mettre à jour</a>
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{{ path('delete',{'id': data.id }) }}">Effacer</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

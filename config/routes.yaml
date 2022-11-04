@@ -1,3 +1,102 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# routes register et login
+register:
+  path: /register
+  controller: App\Controller\RegistrationController::register
+
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+# routes accueil
+
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+foodtrucks:
+  path: /foodtrucks
+  controller: App\Controller\HomeController::foodtrucks
+
+foodtruckCard:
+  path: /foodtruck/{id}
+  controller: App\Controller\HomeController::foodtruckCard
+
+# routes truck
+
+truck:
+  path: /truck
+  controller: App\Controller\TruckController::index
+
+create:
+  path: /truck/create
+  controller: App\Controller\TruckController::create
+
+mytruck:
+  path: /truck/mytruck/{id}
+  controller: App\Controller\TruckController::mytruck
+
+menu:
+  path: /truck/menu
+  controller: App\Controller\TruckController::menu
+
+update:
+  path: /truck/update/{id}
+  controller: App\Controller\TruckController::update
+
+createproduct:
+  path: /truck/createproduct
+  controller: App\Controller\TruckController::createproduct
+
+updateproduct:
+  path: /truck/updateproduct/{id}
+  controller: App\Controller\TruckController::updateproduct
+
+deleteproduct:
+  path: /truck/deleteproduct/{id}
+  controller: App\Controller\TruckController::deleteproduct
+
+createaddress:
+  path: /truck/createaddress
+  controller: App\Controller\TruckController::createaddress
+
+listaddress:
+  path: /truck/listaddress
+  controller: App\Controller\TruckController::listaddress
+
+updateaddress:
+  path: /truck/updateaddress/{id}
+  controller: App\Controller\TruckController::updateaddress
+
+deleteaddress:
+  path: /truck/deleteaddress/{id}
+  controller: App\Controller\TruckController::deleteAddress
+
+#Routes Customer
+
+customer:
+  path: /customer
+  controller: App\Controller\CustomerController::index
+
+createcustomer:
+  path: /customer/createcustomer
+  controller: App\Controller\CustomerController::createcustomer
+
+updatecustomer:
+  path: /customer/updatecustomer/{id}
+  controller: App\Controller\CustomerController::updatecustomer
+
+ownpage:
+  path: /customer/ownpage/{id}
+  controller: App\Controller\CustomerController::ownpage
+
+alltrucks:
+  path: /customer/alltrucks
+  controller: App\Controller\CustomerController::alltrucks
+
+showmenu:
+  path: /customer/showmenu/{id}
+  controller: App\Controller\CustomerController::showmenu

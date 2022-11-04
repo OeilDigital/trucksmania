@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trucksmania{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+                
+        .card { border-radius: 25px; margin-bottom: 1vh; }
+        .card-img-top { border-top-left-radius: 25px; border-top-right-radius: 25px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Les spécialités des foodtrucks prés de chez toi !</h1>
+    </div>
+
+    {# Je créé une carte pour chaque Truck avec son nom, son style et un accés à sa carte #}
+
+    <div class="d-flex justify-content-around flex-wrap">
+        {% for truck in trucksInfos %}
+        <div class="card" style="width: 25vw;">
+            <img src="/logo_foodtruck.JPG" class="card-img-top" alt="logo du foodtruck"/>
+            <div class="card-body">
+                    <h2>{{ truck[1] }}</h2>
+                    <h4>{{ truck[2] }}</h4>
+                    <a href="{{ path('foodtruckCard',{'id':truck[0]}) }}" class="btn btn-primary">Consulter la carte</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

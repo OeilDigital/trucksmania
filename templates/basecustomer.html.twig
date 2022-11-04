@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Trucksmania!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/5/journal/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+        {# Run `composer require symfony/webpack-encore-bundle`
+        and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('home') }}"><div style="display:flex;align-items:center;justify-content:center;"><img src="/hamburger.png"/><h1>TRUCKSMANIA</h1></div></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('customer') }}">Accueil Abonnés
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('ownpage',{'id':app.user.customer.id }) }}">Ma Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('alltrucks') }}">Foodtrucks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mon historique</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mes abonnement</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('createcustomer') }}">S'inscrire</a>
+                        </li>
+                    
+
+                        {# <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LOGIN/SIGNIN</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">LOGIN</a>
+                                <a class="dropdown-item" href="#">SIGNIN</a>
+                                <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </li> #}
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-secondary mx-2 my-2 my-sm-0" type="submit"><a href="{{ path('app_logout') }}" style="text-decoration:none;color:white;">Logout</a></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+        {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

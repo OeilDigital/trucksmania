@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/hamburger.png" type="image/x-icon" />
+        <title>{% block title %}Trucksmania!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/5/journal/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        {# Run `composer require symfony/webpack-encore-bundle`
+        and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <style>
+
+            </style>
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+            <div class="container-fluid">
+                {% if app.user and is_granted('ROLE_TRUCK') and app.user.truck.id is defined %}
+                <a class="navbar-brand" href="{{ path('home') }}"><div id="logo" class="d-flex justify-content-center align-items-start my-2" ><img src="/hamburger.png"/><h1>TRUCKSMANIA</h1></div></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% else %}
+                <a class="navbar-brand" href=""><div id="logo" class="d-flex justify-content-center align-items-start my-2" ><img src="/hamburger.png"/><h1>TRUCKSMANIA</h1></div></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% endif %}
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('truck') }}">Accueil Truck
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        {% if app.user.truck == null %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('truck')}}">Ma page</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('truck_mytruck',{'id':app.user.truck.id }) }}">Ma page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mes commandes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mes Evenements</a>
+                        </li>
+                        {% endif %}
+                        {# <li class="nav-item">
+                            <a class="nav-link" href="{{ path('createaddress') }}">New Adresse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('listaddress') }}">Adresses</a>
+                        </li> #}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Nouvel Enregistrement</a>
+                            <div class="dropdown-menu">
+                                {% if app.user.truck == null %}
+                                    <a class="dropdown-item" href="" style="color:grey;"><em>Nouvelle Adresse</em></a>
+                                    <a class="dropdown-item" href="" style="color:grey;"><em>Nouveau Produit</em></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path('create') }}"><b>Inscription</b></a>
+                                {% else %}
+                                    <a class="dropdown-item" href="{{ path('createaddress') }}"><b>Nouvelle Adresse</b></a>
+                                    <a class="dropdown-item" href="{{ path('createproduct') }}"><b>Nouveau Produit</b></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path('create') }}"><b>Inscription</b></a>
+                                {% endif %}
+                            </div>
+                        </li>
+
+                    
+
+                        {# <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LOGIN/SIGNIN</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">LOGIN</a>
+                                <a class="dropdown-item" href="#">SIGNIN</a>
+                                <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </li> #}
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-warning mx-2 my-2 my-sm-0" type="submit"><a href="{{ path('app_logout') }}" style="text-decoration:none;color:white;">Logout</a></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+        {% block body %}{% endblock %}
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" 
+         crossorigin="anonymous"></script>
+    </body>
+</html>

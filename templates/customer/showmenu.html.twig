@@ -1,0 +1,42 @@
+{% extends 'basecustomer.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Ref. Produit</th>
+            <th scope="col">Nom du Produit</th>
+            <th scope="col">Type</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Description</th>
+            <th></th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for data in list %}
+          <tr>
+            <td>{{ data.getId }}</td>
+            <td>{{ data.getProductName }}</td>
+            <td>{{ data.getType }}</td>
+            <td>{{ data.getPrice }}</td>
+            <td>{{ data.getDescription }}</td>
+            <td>
+              <a href="{{path('cart_add', {'id': data.id}) }}" class="btn btn-success float-right">
+                        <i class="fas fa-shopping-cart mr-1"></i>
+                        Ajouter au Panier
+              </a>
+            </td>
+            <td>
+              <a class="btn btn-warning" href="#">Retirer du  Pannier</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

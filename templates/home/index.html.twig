@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TrucksMania{% endblock %}
+
+{% block body %}
+
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 80%;
+    }
+    #macarte {
+        height:60vh;
+        width: 50vw;
+    }
+    .example-wrapper>button {
+        margin: 1vh;
+    }
+
+    @media screen and (max-width:500px) {
+
+        #macarte{
+            height:50vh;
+            width:92vw;
+            margin: 0.5vh;
+        }
+        .example-wrapper{
+            margin:0;
+            width: 95vw;
+            font: 18px/1.2 sans-serif;
+        }
+    }
+</style>
+<div class="container">
+<hr>
+<div class="example-wrapper">
+    <h5 style="font-family: 'Gloria Hallelujah', cursive;"> Bienvenue à tous sur TrucksMania, le seul site qui vous permet de découvrir
+    les meilleurs foodtrucks prés de chez vous. Si vous souhaitez voir les foodtrucks présents à proximité de vous autorisez votre geolocalisation.</h4>
+    <button onclick="getLocation()">Géolocalisez-moi</button>
+
+    <p id="demo"></p>
+
+    <div id="macarte">
+
+    </div>
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+    <script>
+
+        var x = document.getElementById("demo");
+        //geolocalisation du visiteur
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            let latitude = position.coords.latitude; 
+            let longitude = position.coords.longitude;
+            
+            
+            // On initialise la carte
+            var carte = L.map('macarte').setView([latitude, longitude],15);
+
+            //On charge les tuiles
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    // Il est toujours bien de laisser le lien vers la source des données
+                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(carte);
+            //Icon de marqueur
+            var truckIcon = L.icon({
+            iconUrl:'https://img.icons8.com/metro/26/000000/bus.png',
+            });
+
+            L.control.scale().addTo(carte);
+
+
+            var trucks = {{ coordinates | raw }};
+
+            for (truck in trucks){
+            var markerT = L.marker([trucks[truck][1], trucks[truck][0]],{icon:truckIcon}).addTo(carte);
+            markerT.bindPopup(`<div style="display:flex;flex-direction:column;justify-content:center"><h6>${trucks[truck][2][0]}</h6><button style="height:4vh;border-radius:5px;border:1px solid #FF7B13;background-color:#FFE78C;"><a style="text-decoration:none;color:black;" href="{{relative_path('foodtruck/${trucks[truck][2][1]}') }}">CONSULTER</a></button></div>`).openPopup();
+            }
+
+            var marker = L.marker([latitude, longitude]).addTo(carte);
+            marker.bindPopup("<h6>Salut à toi !</h6>").openPopup();
+
+        }
+
+    </script>  
+{% endblock %}

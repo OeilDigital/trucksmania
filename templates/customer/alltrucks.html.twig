@@ -1,0 +1,36 @@
+{% extends 'basecustomer.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h2>Bonjour {{ app.user.username }}</h2>
+    <br>
+    <h3>Tous les Trucks</h3>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom d'enseigne</th>
+            <th scope="col">Style</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telephone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for truck in trucks %}
+          <tr>
+            <td >{{ truck.getNameTruck }}</td>
+            <td>{{ truck.getStyle}}</td>
+            <td>{{ truck.user.email }}</td>
+            <td>{{ truck.getPhoneNumber }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('showmenu',{'id': truck.id }) }}">Carte</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

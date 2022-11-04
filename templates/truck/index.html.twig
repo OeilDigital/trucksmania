@@ -1,0 +1,33 @@
+{% extends 'basetruck.html.twig' %}
+
+{% block title %}Hello TruckController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    #intro { width: 40vw;text-align: justify; }
+</style>
+
+<div class="example-wrapper">
+    <h3>Bonjour {{ username }}</h3><br>
+    <div id="intro">
+    <p> Cet espace est dédié aux propriétaires et gestionnaires de Foodtrucks.
+    Vous y retrouverez toutes les informations concernant votre enseigne.
+    Vous pourrez bien sûr mettre à jour ces derniéres, vos adresses ainsi que
+    votre carte en vous rendant sur le lien "Ma Page".
+    Vous pourrez également consulter les commandes qui vous sont adressées.
+    Si c'est votre <strong>premiére connexion</strong> veuillez, tout d'abord,
+    renseigner les informations qui concernent <strong>votre Foodtruck</strong> <a href="{{ path('create') }}">ici</a>.
+    Aprés quoi, vous pourrez à minima renseigner <strong>une adresse</strong>
+    (vous pouvez bien évidemment en avoir plusieurs), ainsi que bien évidemment vos <strong>produits</strong>, et
+    de sorte à consituer votre carte de menu en ligne via le menu "Nouvel Enregistrement".
+    Vos clients potentiels pourront ainsi vous trouver et prendre connaissance
+    de votre Carte.<br></p>
+    <div>
+
+
+{# </div>
+<div {{ react_component('Modal', {'button1':'Ouvrir la Modale'}) }}>
+</div> #}
+{% endblock %}

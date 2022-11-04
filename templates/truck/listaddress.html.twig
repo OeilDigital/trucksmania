@@ -1,0 +1,40 @@
+{% extends 'basetruck.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+    <h2>Bonjour {{ app.user.username }}</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">N° de Voirie</th>
+            <th scope="col">Nom de Voirie</th>
+            <th scope="col">Code Postal</th>
+            <th scope="col">Ville</th>
+            <th scope="col">Complement d'adresse</th>
+            <th></th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for data in list %}
+          <tr>
+            <td>{{ data.getStreetNumber }}</td>
+            <td>{{ data.getStreetName }}</td>
+            <td>{{ data.getPostCode }}</td>
+            <td>{{ data.getCity }}</td>
+            <td>{{ data.getAdditionalAddress() }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('updateaddress',{'id': data.id }) }}">Mettre à jour</a>
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{{ path('deleteaddress',{'id': data.id }) }}">Effacer</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

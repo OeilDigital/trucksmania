@@ -1,0 +1,29 @@
+{% extends 'basecustomer.html.twig' %}
+
+{% block title %}Ma Page{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h2>Bonjour {{ app.user.username }}</h2>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Telephone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ customer.getLastName }}</td>
+            <td>{{ customer.getFirstName }}</td>
+            <td>{{ customer.getPhoneNumber }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('updatecustomer',{'id': app.user.customer.id }) }}">Mettre à jour</a>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

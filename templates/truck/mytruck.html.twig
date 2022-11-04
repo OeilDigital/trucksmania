@@ -1,0 +1,112 @@
+{% extends 'basetruck.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h2>Bonjour {{ app.user.username }}</h2>
+    <br>
+    <h3>Mes Infos</h3>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom d'enseigne</th>
+            <th scope="col">Style</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">Siret</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="color:navy;font-size:1.3em;font-weight:bold;">
+            <td>{{ truck.getNameTruck }}</td>
+            <td>{{ truck.getStyle }}</td>
+            <td>{{ truck.getLastName }}</td>
+            <td>{{ truck.getFirstName }}</td>
+            <td>{{ truck.user.email }}</td>
+            <td>{{ truck.getPhoneNumber }}</td>
+            <td>{{ truck.siret }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('update',{'id': app.user.truck.id }) }}">Mettre à jour</a>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<hr>
+<div class="container my-5">
+    <h3>Mes Produits</h3>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Ref. Produit</th>
+            <th scope="col">Nom du Produit</th>
+            <th scope="col">Type</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Description</th>
+            <th></th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for data in products %}
+          <tr>
+            <td>{{ data.getId }}</td>
+            <td>{{ data.getProductName }}</td>
+            <td>{{ data.getType }}</td>
+            <td>{{ data.getPrice }}</td>
+            <td>{{ data.getDescription }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('updateproduct',{'id': data.id }) }}">Mettre à jour</a>
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{{ path('delete',{'id': data.id }) }}">Effacer</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<hr>
+<div class="container my-5">
+    <h3>Mes Adresses</h3>
+    <table class="table table-striped">
+        <theadz>
+          <tr>
+            <th scope="col">N° de Voirie</th>
+            <th scope="col">Nom de Voirie</th>
+            <th scope="col">Code Postal</th>
+            <th scope="col">Ville</th>
+            <th scope="col">Complement d'adresse</th>
+            <th></th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for data in addresses %}
+          <tr>
+            <td>{{ data.getStreetNumber }}</td>
+            <td>{{ data.getStreetName }}</td>
+            <td>{{ data.getPostCode }}</td>
+            <td>{{ data.getCity }}</td>
+            <td>{{ data.getAdditionalAddress() }}</td>
+            <td>
+              <a class="btn btn-success" href="{{ path('updateaddress',{'id': data.id }) }}">Mettre à jour</a>
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{{ path('deleteaddress',{'id': data.id }) }}">Effacer</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
