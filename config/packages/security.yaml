@@ -3,7 +3,7 @@ security:
   enable_authenticator_manager: true
   # https://symfony.com/doc/current/security.html#c-hashing-passwords
   password_hashers:
-    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
+    Symfony\Component\Security\Core\User\InMemoryUser: bcrypt
     App\Entity\User:
       algorithm: auto
 

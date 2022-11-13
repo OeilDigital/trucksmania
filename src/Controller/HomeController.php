@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Address;
 use App\Entity\Product;
 use App\Entity\Truck;
+use App\Entity\Picture;
 use App\Entity\User;
 use App\Service\CallApiServiceGPS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,7 +22,7 @@ class HomeController extends AbstractController
     public function index(CallApiServiceGPS $callApiServiceGPS, EntityManagerInterface $em): Response
     {
 
-        
+
         $allTrucksAdd = $em->getRepository(Address::class)->skipAddresses();
         $fullAdd = $em->getRepository(Address::class)->findAll();
         // dd($fullAdd);
@@ -36,42 +37,42 @@ class HomeController extends AbstractController
         // dd($days);
         $day = Date('D');
         $r = [];
-        foreach($fullAdd as $data){
+        foreach ($fullAdd as $data) {
             $arrayDay = $data->getDaysOfPresence();
-            if(array_search($day,$arrayDay) !== false ){
-            $truck = $data->getTruck()->first();
-            $truckName = $truck->getNameTruck();
-            $truckId = $data->getTruck()->first()->getId();
-            array_push($r, [$truckName, $truckId]);
+            if (array_search($day, $arrayDay) !== false) {
+                $truck = $data->getTruck()->first();
+                $truckName = $truck->getNameTruck();
+                $truckId = $data->getTruck()->first()->getId();
+                array_push($r, [$truckName, $truckId]);
             }
         }
 
-        
+
         $addConcat = [];
-        foreach($allTrucksAdd as $value){
-            if(array_search($day,$value['days_of_presence']) !== false){
-            $number = $value['street_number'];    
-            $street= $value['street_name'];
-            $post_code= $value['post_code'];
-            $city = $value['city'];
-            //Je concaténe $street avec des +
-            $street=str_replace(" ", "+", $street);
-            //Je concatene tous les éléments de mon adresse avec des +
-            $full = $number."+".$street."+".$post_code."+".$city;
-            array_push($addConcat, $full);
+        foreach ($allTrucksAdd as $value) {
+            if (array_search($day, $value['days_of_presence']) !== false) {
+                $number = $value['street_number'];
+                $street = $value['street_name'];
+                $post_code = $value['post_code'];
+                $city = $value['city'];
+                //Je concaténe $street avec des +
+                $street = str_replace(" ", "+", $street);
+                //Je concatene tous les éléments de mon adresse avec des +
+                $full = $number . "+" . $street . "+" . $post_code . "+" . $city;
+                array_push($addConcat, $full);
             }
         }
         // Je récupére les points gps de mes adresses dans $coordinate
-        $coordinates =[];
+        $coordinates = [];
         //Penser une fonction asynchrone pour la requete et stocker la réponse de l'API dans $coordonate
-        foreach($addConcat as $value){
+        foreach ($addConcat as $value) {
             $data = $callApiServiceGPS->getFranceApi($value);
             array_push($coordinates, $data);
         }
         // dd($r);     
-        for($i=0;$i<count($coordinates);$i++){
-            array_push($coordinates[$i],$r[$i]);
-            }
+        for ($i = 0; $i < count($coordinates); $i++) {
+            array_push($coordinates[$i], $r[$i]);
+        }
 
 
         $coordinates = json_encode($coordinates);
@@ -89,19 +90,29 @@ class HomeController extends AbstractController
     #[Route('/foodtrucks', name: 'foodtrucks')]
     public function foodtrucks(EntityManagerInterface $em)
     {
-        
+
+        phpinfo();
         $allTrucks = $em->getRepository(Truck::class)->truckCards();
+        $allPictures = $em->getRepository(Picture::class)->findAll();
         $trucksInfos = [];
-        foreach($allTrucks as $truck){
-            $info =[];
+        foreach ($allTrucks as $truck) {
+            $info = [];
             $id = $truck['id'];
-            array_push($info,$id);
+            array_push($info, $id);
             $name = $truck['name_truck'];
-            array_push($info,$name);
+            array_push($info, $name);
             $style = $truck['style'];
-            array_push($info,$style);
+            array_push($info, $style);
+                if ($em->getRepository(Picture::class)->skipPictures($id)) {
+                    $picture = $em->getRepository(Picture::class)->skipPictures($id);
+                    // $pictname = $picture->getName();
+                    array_push($info, $picture);
+                }
+    
             array_push($trucksInfos, $info);
         }
+
+        // dd($trucksInfos);
 
         return $this->render('home/foodtrucks.html.twig', [
             'trucksInfos' => $trucksInfos,
@@ -112,7 +123,7 @@ class HomeController extends AbstractController
     #[Route('/foodtruck/{id}', name: 'foodtruckCard')]
     public function foodtruckCard($id, EntityManagerInterface $em)
     {
-        
+
         $data = $em->getRepository(Truck::class)->find($id);
         $value = $data->getId();
         $coord = $em->getRepository(Truck::class)->truckCoord($value);

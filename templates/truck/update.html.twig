@@ -46,6 +46,18 @@
                 {{ siret }}
                 {{ form_widget(form.siret,{'attr':{'class':'form-control'}}) }}
                 </div>
+                <div class="form-group">
+                {{ picture }}
+                {{ form_widget(form.picture,{'attr':{'class':'form-control'}}) }}
+                <br/>
+                    {% for picture in pictArray %}
+                    <div>
+                        <img src="{{ asset('/uploads/' ~ picture.name) }}" alt="Image" width="150">
+                        {# <a href="{{ relative_path('truck_delete_picture', {'id': picture.id }) }}"
+                        data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a> #}
+                    </div>
+                    {% endfor %}
+                </div>
                 <br>
                 {# <div class="form-group">
                 <h5>Veuillez confirmer votre email</h5>
@@ -59,4 +71,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/pictures.js') }}"></script>
 {% endblock %}

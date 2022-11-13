@@ -64,10 +64,16 @@ class Truck
      */
     private $style;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="truck", orphanRemoval=true, cascade={"persist"})
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->addresses = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -212,6 +218,36 @@ class Truck
     public function setStyle(?string $style): self
     {
         $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setTruck($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getTruck() === $this) {
+                $picture->setTruck(null);
+            }
+        }
 
         return $this;
     }

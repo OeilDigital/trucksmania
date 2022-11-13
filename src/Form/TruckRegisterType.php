@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
@@ -23,8 +24,14 @@ class TruckRegisterType extends AbstractType
             ->add('first_name')
             ->add('phone_number')
             ->add('siret')
-        
-            
+            ->add('picture', FileType::class, [
+                'label' => true,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
+            ])
+
+
             // ->add('user')
             // ->add('addresses')
         ;

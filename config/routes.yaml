@@ -75,6 +75,10 @@ deleteaddress:
   path: /truck/deleteaddress/{id}
   controller: App\Controller\TruckController::deleteAddress
 
+truck_picture_delete:
+  path: /truck/picture/delete/{id}
+  controller: App\Controller\TruckController::deletePicture
+
 #Routes Customer
 
 customer:

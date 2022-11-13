@@ -19,8 +19,14 @@
 
     <div class="d-flex justify-content-around flex-wrap">
         {% for truck in trucksInfos %}
+        {# {{ dump(truck) }} #}
         <div class="card" style="width: 25vw;">
+            {% if  truck[3] is defined %}
+            <img src="{{ asset('uploads/' ~ truck[3][0]['name']) }}" class="card-img-top" alt="logo du foodtruck" style="height:36vh;"/>
+            {% else %}
             <img src="/logo_foodtruck.JPG" class="card-img-top" alt="logo du foodtruck"/>
+            {% endif %}
+
             <div class="card-body">
                     <h2>{{ truck[1] }}</h2>
                     <h4>{{ truck[2] }}</h4>

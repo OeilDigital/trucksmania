@@ -19,41 +19,39 @@ class TruckRepository extends ServiceEntityRepository
         parent::__construct($registry, Truck::class);
     }
 
-     /**
-      * @return Truck[] Returns an array of Truck objects
-      */
-    
+    /**
+     * @return Truck[] Returns an array of Truck objects
+     */
+
     public function truckCards()
     {
         return $this->createQueryBuilder('t')
-            ->select('t.id','t.name_truck','t.style')
+            ->select('t.id', 't.name_truck', 't.style')
             // ->andWhere('t.exampleField = :val')
             // ->setParameter('val', $value)
             // ->orderBy('t.id', 'ASC')
             // ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-     /**
-      * @return Truck[] Returns an array of Truck objects
-      */
-    
-      public function truckCoord($value)
-      {
-          return $this->createQueryBuilder('t')
-              ->select('t.id','t.name_truck','t.style','t.phone_number')
-              -> where('t.id = :val')
-              // ->andWhere('t.exampleField = :val')
-              ->setParameter('val', $value)
-              // ->orderBy('t.id', 'ASC')
-              // ->setMaxResults(10)
-              ->getQuery()
-              ->getResult()
-          ;
-      }
-    
+    /**
+     * @return Truck[] Returns an array of Truck objects
+     */
+
+    public function truckCoord($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id', 't.name_truck', 't.style', 't.phone_number')
+            ->where('t.id = :val')
+            // ->andWhere('t.exampleField = :val')
+            ->setParameter('val', $value)
+            // ->orderBy('t.id', 'ASC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Truck

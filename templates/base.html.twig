@@ -57,8 +57,9 @@
                         </li>
                         {% if app.user and is_granted('ROLE_TRUCK') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('truck_mytruck',{'id':app.user.truck.id }) }}">Mon Espace</a>
+                            <a class="nav-link" href="{{ path('mytruck',{'id':app.user.truck.id }) }}">Mon Espace</a>
                         </li>
+                        {% else %}
                         {% endif %}
                     
                     </ul> 

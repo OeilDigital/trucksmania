@@ -37,6 +37,18 @@
         </tbody>
     </table>
 </div>
+<div class="container my-5">
+  <h3>Mon logo<h3>
+  {% for picture in pictArray %}
+    <div>
+      <img src="{{ asset('/uploads/' ~ picture.name) }}" alt="Image" width="150">
+      <a class="btn btn-danger" href="{{ path('truck_picture_delete', {'id': picture.id }) }}">Effacer</a>
+      {# <a href="{{ relative_path('truck_picture_delete', {'id': picture.id }) }}"
+      data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a> #}
+    </div>
+  {% endfor %}
+</div>
+
 <br>
 <hr>
 <div class="container my-5">
@@ -66,7 +78,7 @@
               <a class="btn btn-success" href="{{ path('updateproduct',{'id': data.id }) }}">Mettre à jour</a>
             </td>
             <td>
-              <a class="btn btn-danger" href="{{ path('delete',{'id': data.id }) }}">Effacer</a>
+              <a class="btn btn-danger" href="{{ path('deleteproduct',{'id': data.id }) }}">Effacer</a>
             </td>
           </tr>
         {% endfor %}
@@ -109,4 +121,8 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/pictures.js') }}"></script>
 {% endblock %}
